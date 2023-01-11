@@ -31,6 +31,12 @@ app.get("/api", async (req, res) => {
 	res.send(result)
 })
 
+app.get("/api3", async (req, res) => {
+	const result = await database.run("SELECT * FROM menbers")
+	console.log(result)
+	res.send(result)
+})
+
 
 
 app.listen(port, () => {
