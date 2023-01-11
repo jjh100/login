@@ -2,7 +2,12 @@ const express = require("express")
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+const database = require("./database")
+
 app.use(express.static('dist'));
+
+
 const port = 3000
 
 const members = [
@@ -20,16 +25,20 @@ const members = [
 	}
 ]
 
-app.get("/api", (req, res) => {
-	res.send("Hello World!")
+app.get("/api", async (req, res) => {
+	const result = await database.run("SELECT * FROM menbers")
+	console.log(result)
+	res.send(result)
 })
+
+
 
 app.listen(port, () => {
 	console.log(`Example app listening on port ${port}`)
 })
 
 app.get("/api/account", (req, res) => {
-	res.send(401)
+	// res.send(401)
 })
 
 app.post("/api/account", (req, res) => {
